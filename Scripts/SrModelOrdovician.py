@@ -89,7 +89,7 @@ Jh = np.zeros(nt)
 Jh = Jhflank + Jhcrest
 
 # Hydrothermal isotopic ratio
-Rh0 = 0.7030
+Rh0 = 0.7037
 Rh = np.ones(nt) * Rh0
 
 # Array to store isotopic ratio of seawater and rate of change
