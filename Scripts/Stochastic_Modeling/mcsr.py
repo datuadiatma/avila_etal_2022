@@ -13,6 +13,28 @@ import json
 
 from tqdm import tqdm
 
+# Mass balance
+def simNSr(jr, jh, jcarb):
+    """
+    Strontium Mass Balance
+
+    Parameters
+    ----------
+    jr : float
+        Global riverine flux of Sr
+    jh : float
+        Hydrothermal flux of Sr.
+    jcarb : float
+        strontium uptake during carbonate deposition
+    
+    Returns
+    -------
+    nsr : float
+        Seawater Sr reservoir size in mol
+    """
+    nsr = jr + jh - jcarb
+    return nsr
+
 # Isotopic mass balace equation
 def simSr(jr, rr, rsw, jh, rh, n):
     """
@@ -80,9 +102,15 @@ def run_sim(nt, dt, age, jr, rr, rsw, jh, rh, n):
     """
     rsw0 = (jr[0]*rr[0] + jh[0]*rh[0])/(jr[0]+jh[0])
     rsw[0] = rsw0
-    
+
+    jcarb0 = jr[0] + jh[0]
+    k = jcarb0 / n[0]
+    jcarb = jcarb0
+
     for i in range(nt-1):
+        n[i+1] = n[i] + simNSr(jr[i], jh[i], jcarb)*dt
         rsw[i+1] = rsw[i] + simSr(jr[i], rr[i], rsw[i], jh[i], rh[i], n[i])*dt
+        jcarb = k * n[i]
 
 
     return rsw
