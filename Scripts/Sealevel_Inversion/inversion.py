@@ -42,8 +42,8 @@ def dRVdt(RV, t):
     
     return d
 
-age = np.load('OrdoSeaLevel.npz')['age']
-sealevel = np.load('OrdoSeaLevel.npz')['SeaLevel']
+age = np.load('ridge_production/OrdoSeaLevel.npz')['age']
+sealevel = np.load('ridge_production/OrdoSeaLevel.npz')['SeaLevel']
 
 sealevel_km = sealevel/1e3
 Aocean = 360e6            # km^2 from Gaffin (1987)
