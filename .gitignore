@@ -130,3 +130,6 @@ dmypy.json
 
 # Ignore DS_store
 .DS_Store
+
+# Ignore json setting
+.vscode/
