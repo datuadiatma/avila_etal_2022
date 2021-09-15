@@ -2,7 +2,9 @@
 """
 Created on Tue Septh 14 2021
 Python script to run "monte-carlo-optimized" strontium box model
-Scenario 1
+Scenario 10: modern hydrothermal flux
+
+
 @author: adiatma.1
 """
 # Import modules and libraries
@@ -20,8 +22,13 @@ import pandas as pd
 from mcsr import run_sim
 from mcsr_vec import run_sim_steady_state_vec as rss_vec
 
-# Set random seed for reprudicibility
+# Monte Carlo Parameters
+# ----------------------
+
+# Set random seed for reproducibility
 np.random.seed(614)
+
+# Adjust Jh paramater range of published modern values
 
 mc_parameter = {
     "tmin"     :  480,
@@ -31,10 +38,10 @@ mc_parameter = {
     "Jriv"     :  [1e6, 1e12],
     "Rriv"     :  [0.7030, 0.7120],
 
-    "Jh"       :  [1e6, 1e12],
+    "Jh"       :  [3.1e9, 1.6e10],
     "Rh"       :  [0.7030, 0.7070],
 
-    "sampling" : 80000
+    "sampling" :  80000
 }
 # Start time
 starttime = time()
@@ -145,7 +152,7 @@ ag1 = fig2.add_subplot(gs[0,0:])
 ag1.plot(age, Rsw_transient, c='k', ls='--', lw=3,
          label='Monte Carlo-optimized\nTransient Box Model')
 ag1.plot(dx['age'], dx['Rsw'], c='steelblue', ls='--',
-        label='Hydrothermal-driven\nModel')
+        label='Hydrothermal-driven\nBox Model')
 ag1.fill_between(age, Rsw_hi, Rsw_lo, fc='green', alpha=0.15)
 ag1.scatter(df['age'], df['sr'], fc='green', ec='black', label='Conodont Sr',
             alpha=0.5)
@@ -185,6 +192,13 @@ ag3.set_xlabel('Age (Ma)')
 exectime = time() - starttime
 print('Execution time: %.1f s'%exectime)
 
-plt.savefig('../../Figures/MonteCarlo_Simulation/scenario1_random', dpi=300)
-plt.savefig('../../Figures/MonteCarlo_Simulation/scenario1_random.svg')
+plt.savefig(
+    '../../Figures/MonteCarlo_Simulation/scenario10_modern_hydrothermalFlux.png',
+    dpi=300
+    )
+
+plt.savefig(
+    '../../Figures/MonteCarlo_Simulation/scenario10_modern_hydrothermalFlux.svg'
+    )
+
 plt.show()

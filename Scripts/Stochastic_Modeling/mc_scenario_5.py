@@ -2,7 +2,7 @@
 """
 Created on Tue Septh 14 2021
 Python script to run "monte-carlo-optimized" strontium box model
-Scenario 1
+Scenario 5: Riverine Flux at W=1.4
 @author: adiatma.1
 """
 # Import modules and libraries
@@ -20,9 +20,14 @@ import pandas as pd
 from mcsr import run_sim
 from mcsr_vec import run_sim_steady_state_vec as rss_vec
 
-# Set random seed for reprudicibility
+# Monte Carlo Parameters
+# ----------------------
+
+# Set random seed for reprodicibility
 np.random.seed(614)
 
+# Load riverine flux
+riverine = pd.read_csv('riverine.csv')
 mc_parameter = {
     "tmin"     :  480,
     "tmax"     :  450,
@@ -34,14 +39,17 @@ mc_parameter = {
     "Jh"       :  [1e6, 1e12],
     "Rh"       :  [0.7030, 0.7070],
 
-    "sampling" : 80000
+    "sampling" :  80000
 }
 # Start time
 starttime = time()
 
 # run MC resampling
 par = rss_vec(mc_parameter, 'target.json', 1e-5,
-              'random', verbose=True)
+              'riverine',
+              riverine_flux=riverine['friv'],
+              riverine_age=riverine['age'],
+              verbose=True)
 
 # Unpack results into variables
 Jriv = par['Jriv']
@@ -145,7 +153,7 @@ ag1 = fig2.add_subplot(gs[0,0:])
 ag1.plot(age, Rsw_transient, c='k', ls='--', lw=3,
          label='Monte Carlo-optimized\nTransient Box Model')
 ag1.plot(dx['age'], dx['Rsw'], c='steelblue', ls='--',
-        label='Hydrothermal-driven\nModel')
+        label='Hydrothermal-driven\nBox Model')
 ag1.fill_between(age, Rsw_hi, Rsw_lo, fc='green', alpha=0.15)
 ag1.scatter(df['age'], df['sr'], fc='green', ec='black', label='Conodont Sr',
             alpha=0.5)
@@ -165,8 +173,8 @@ ag2.fill_between(age, Jh_hi, Jh_lo, fc='red', alpha=0.15)
 ag2.set_ylabel('Sr Flux', fontsize=14)
 ag2.legend(loc="upper left")
 ag2.set_xlim(480, 450)
-# ag2.set_ylim(0, 9e10)
-# ag2.set_yticks(np.linspace(0, 8e10, 5))
+ag2.set_ylim(0, 9e10)
+ag2.set_yticks(np.linspace(0, 8e10, 5))
 ag2.set_xlabel('Age (Ma)')
 
 ag3 = fig2.add_subplot(gs[1,1])
@@ -185,6 +193,6 @@ ag3.set_xlabel('Age (Ma)')
 exectime = time() - starttime
 print('Execution time: %.1f s'%exectime)
 
-plt.savefig('../../Figures/MonteCarlo_Simulation/scenario1_random', dpi=300)
-plt.savefig('../../Figures/MonteCarlo_Simulation/scenario1_random.svg')
+plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40', dpi=300)
+plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40.svg')
 plt.show()

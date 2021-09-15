@@ -133,3 +133,6 @@ dmypy.json
 
 # Ignore json setting
 .vscode/
+
+# Ignore ppt file
+*.pptx
