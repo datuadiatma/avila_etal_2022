@@ -147,9 +147,9 @@ df = pd.read_excel('mastersr.xlsx')
 dx = pd.read_csv('../../Output/SL_Model_output.csv')
 
 # Grid Spec plotting
-fig2 = plt.figure(constrained_layout=True, figsize = (10, 8))
-gs = fig2.add_gridspec(2, 2)
-ag1 = fig2.add_subplot(gs[0,0:])
+fig1 = plt.figure(constrained_layout=True, figsize = (10, 8))
+gs = fig1.add_gridspec(2, 2)
+ag1 = fig1.add_subplot(gs[0,0:])
 ag1.plot(age, Rsw_transient, c='k', ls='--', lw=3,
          label='Monte Carlo-optimized\nTransient Box Model')
 ag1.plot(dx['age'], dx['Rsw'], c='steelblue', ls='--',
@@ -165,7 +165,7 @@ ag1.set_xlabel('Age (Ma)')
 ag1.legend(loc = 'lower left')
 
 
-ag2 = fig2.add_subplot(gs[1,0])
+ag2 = fig1.add_subplot(gs[1,0])
 ag2.plot(age, Jriv_mean, 'b--', alpha=0.5, label='Riverine')
 ag2.fill_between(age, Jriv_hi, Jriv_lo, fc='blue', alpha=0.15)
 ag2.plot(age, Jh_mean, 'r--', alpha=0.5, label='Hydrothermal')
@@ -177,7 +177,7 @@ ag2.set_ylim(0, 9e10)
 ag2.set_yticks(np.linspace(0, 8e10, 5))
 ag2.set_xlabel('Age (Ma)')
 
-ag3 = fig2.add_subplot(gs[1,1])
+ag3 = fig1.add_subplot(gs[1,1])
 ag3.plot(age, Rriv_mean, 'b--', alpha=0.5, label='Riverine')
 ag3.fill_between(age, Rriv_hi, Rriv_lo, fc='blue', alpha=0.15)
 ag3.set_ylabel(r'$^{87}Sr/^{86}Sr_{fluxes}$', fontsize=14)
@@ -195,4 +195,48 @@ print('Execution time: %.1f s'%exectime)
 
 plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40', dpi=300)
 plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40.svg')
+
+fig, (ax1, ax2, ax3) = plt.subplots(3,1, sharex=True, figsize=(5,8), 
+        constrained_layout=True)
+# fig2 = plt.figure(constrained_layout=True, figsize = (5, 8))
+# ax1 = fig2.add_subplot(311)
+ax1.plot(age, Rsw_transient, c='k', ls='--', lw=2,
+         label='Monte Carlo-optimized\nTransient Box Model')
+ax1.plot(dx['age'], dx['Rsw'], c='steelblue', ls='--',
+        label='Hydrothermal-driven\nBox Model')
+ax1.fill_between(age, Rsw_hi, Rsw_lo, fc='green', alpha=0.15)
+ax1.scatter(df['age'], df['sr'], fc='green', ec='black', label='Conodont Sr',
+            alpha=0.3)
+ax1.set_xlim(480, 450)
+ax1.set_ylim(0.7075, 0.7095)
+ax1.set_yticks(np.linspace(0.7078, 0.7094, 5))
+ax1.set_ylabel(r'$^{87}Sr/^{86}Sr_{seawater}$', fontsize=14)
+ax1.legend(loc = 'lower left')
+
+# ax2 = fig2.add_subplot(312, sharex=ax1)
+ax2.plot(age, Jriv_mean/1e10, 'b--', alpha=0.5, label='Riverine')
+ax2.fill_between(age, Jriv_hi/1e10, Jriv_lo/1e10, fc='blue', alpha=0.15)
+ax2.plot(age, Jh_mean/1e10, 'r--', alpha=0.5, label='Hydrothermal')
+ax2.fill_between(age, Jh_hi/1e10, Jh_lo/1e10, fc='red', alpha=0.15)
+ax2.set_ylabel('Sr Flux\n($10^{10}$ mol/yr)', fontsize=14)
+ax2.legend(loc="upper left")
+ax2.set_xlim(480, 450)
+ax2.set_ylim(0, 9)
+ax2.set_yticks(np.linspace(2, 8, 4))
+
+# ax3 = fig2.add_subplot(313, sharex=ax1)
+ax3.plot(age, Rriv_mean, 'b--', alpha=0.5, label='Riverine')
+ax3.fill_between(age, Rriv_hi, Rriv_lo, fc='blue', alpha=0.15)
+ax3.set_ylabel(r'$^{87}Sr/^{86}Sr_{fluxes}$', fontsize=14)
+ax3.plot(age, Rh_mean, 'r--', alpha=0.5, label='Hydrothermal')
+ax3.fill_between(age, Rh_hi, Rh_lo, fc='red', alpha=0.15)
+ax3.legend()
+ax3.set_xlim(480, 450)
+ax3.set_ylim(0.7030, 0.7125)
+ax3.set_yticks(np.linspace(0.7035, 0.7115, 5))
+ax3.set_xlabel('Age (Ma)')
+
+plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40_1col', dpi=300)
+plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40_1col.svg')
+
 plt.show()
