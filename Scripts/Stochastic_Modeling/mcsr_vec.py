@@ -8,6 +8,8 @@ import numpy as np
 import json
 from tqdm import tqdm
 
+rng = np.random.default_rng(614)
+
 from scipy.interpolate import interp1d
 
 # Steady state isotopic mass balance equation
@@ -104,12 +106,18 @@ def run_sim_steady_state_vec(parameter, target_array, tolerance=2e-4,
         # Generate range of forcing values to sample
         Rriv_range = (np.zeros((nt,s)) +
                       np.random.uniform(param['Rriv'][0], param['Rriv'][1],s))
+        rng.shuffle(Rriv_range, axis=1)
+        rng.shuffle(Rriv_range, axis=0)
         
         Jh_range = (np.zeros((nt,s)) +
                     np.random.uniform(param['Jh'][0], param['Jh'][1], s))
+        rng.shuffle(Jh_range, axis=1)
+        rng.shuffle(Jh_range, axis=0)
         
         Rh_range = (np.zeros((nt,s)) +
                     np.random.uniform(param['Rh'][0], param['Rh'][1], s))
+        rng.shuffle(Rh_range, axis=1)
+        rng.shuffle(Rh_range, axis=0)
 
         # Empty list to store results
         Jriv_res = np.zeros((nt,s))

@@ -39,7 +39,7 @@ mc_parameter = {
     "Jh"       :  [1e6, 1e12],
     "Rh"       :  [0.7030, 0.7070],
 
-    "sampling" :  80000
+    "sampling" :  400000
 }
 # Start time
 starttime = time()
@@ -82,6 +82,8 @@ Jh_min = np.zeros_like(age)
 
 Rriv_mean = np.zeros_like(age)
 Rriv_stdev = np.zeros_like(age)
+Rriv_min = np.zeros_like(age)
+Rriv_max = np.zeros_like(age)
 
 Rh_mean = np.zeros_like(age)
 Rh_stdev = np.zeros_like(age)
@@ -97,6 +99,8 @@ for i in range(len(age)):
     Rriv_d = Rriv[i,:]
     Rriv_mean[i] = np.mean(Rriv_d[Rriv_d!=0])
     Rriv_stdev[i] = np.std(Rriv_d[Rriv_d!=0])
+    Rriv_min[i] = np.min(Rriv_d[Rriv_d!=0])
+    Rriv_max[i] = np.max(Rriv_d[Rriv_d!=0])
 
     Jh_d = Jh[i,:]
     Jh_mean[i] = np.mean(Jh_d[Jh_d!=0])
@@ -179,7 +183,8 @@ ag2.set_xlabel('Age (Ma)')
 
 ag3 = fig1.add_subplot(gs[1,1])
 ag3.plot(age, Rriv_mean, 'b--', alpha=0.5, label='Riverine')
-ag3.fill_between(age, Rriv_hi, Rriv_lo, fc='blue', alpha=0.15)
+ag3.fill_between(age, Rriv_hi, Rriv_lo, fc='blue', alpha=0.15, label='Std. Dev')
+ag3.fill_between(age, Rriv_max, Rriv_min, fc='lightblue', alpha=0.35, label='Range')
 ag3.set_ylabel(r'$^{87}Sr/^{86}Sr_{fluxes}$', fontsize=14)
 ag3.plot(age, Rh_mean, 'r--', alpha=0.5, label='Hydrothermal')
 ag3.fill_between(age, Rh_hi, Rh_lo, fc='red', alpha=0.15)
@@ -193,8 +198,8 @@ ag3.set_xlabel('Age (Ma)')
 exectime = time() - starttime
 print('Execution time: %.1f s'%exectime)
 
-plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40', dpi=300)
-plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40.svg')
+plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40_shuffle', dpi=300)
+plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40_shuffle.svg')
 
 fig, (ax1, ax2, ax3) = plt.subplots(3,1, sharex=True, figsize=(5,8), 
         constrained_layout=True)
