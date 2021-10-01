@@ -33,13 +33,13 @@ mc_parameter = {
     "tmax"     :  450,
     "nt"       :  1000,
 
-    "Jriv"     :  [1e6, 1e12],
-    "Rriv"     :  [0.7030, 0.7120],
+    "Jriv"     :  [10e9, 190e9],
+    "Rriv"     :  [0.7025, 0.7500],
 
-    "Jh"       :  [1e6, 1e12],
+    "Jh"       :  [2e9, 35e9],
     "Rh"       :  [0.7030, 0.7070],
 
-    "sampling" :  80000
+    "sampling" : 80000
 }
 # Start time
 starttime = time()
