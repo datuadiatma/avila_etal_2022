@@ -136,7 +136,7 @@ Rsw_lo = (Jriv_lo*Rriv_lo + Jh_lo*Rh_lo) / (Jriv_lo + Jh_lo)
 # Run transient model
 nt = len(age)
 dt = (age.max() - age.min())*1e6/nt
-n = np.ones(nt)*1.9e17
+n = np.ones(nt)*0.3e17
 
 Rsw_transient = np.zeros(nt)
 Rsw_transient_hi = np.zeros(nt)
