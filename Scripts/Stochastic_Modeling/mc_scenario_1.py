@@ -20,7 +20,7 @@ import pandas as pd
 from mcsr import run_sim
 from mcsr_vec import run_sim_steady_state_vec as rss_vec
 
-# Set random seed for reprudicibility
+# Set random seed for reproducibility
 np.random.seed(614)
 
 mc_parameter = {

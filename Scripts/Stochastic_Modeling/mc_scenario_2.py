@@ -23,7 +23,7 @@ from mcsr_vec import run_sim_steady_state_vec as rss_vec
 # Monte Carlo Parameters
 # ----------------------
 
-# Set random seed for reprodicibility
+# Set random seed for reproducibility
 np.random.seed(614)
 
 # Load riverine flux

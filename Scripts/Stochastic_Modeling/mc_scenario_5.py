@@ -27,7 +27,7 @@ from mcsr_vec import run_sim_steady_state_vec as rss_vec
 np.random.seed(614)
 
 # Load riverine flux
-riverine = pd.read_csv('riverine.csv')
+riverine = pd.read_csv('riverine40.csv')
 mc_parameter = {
     "tmin"     :  480,
     "tmax"     :  450,
