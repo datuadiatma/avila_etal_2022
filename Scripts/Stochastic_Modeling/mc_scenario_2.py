@@ -23,7 +23,7 @@ from mcsr_vec import run_sim_steady_state_vec as rss_vec
 # Monte Carlo Parameters
 # ----------------------
 
-# Set random seed for reprodicibility
+# Set random seed for reproducibility
 np.random.seed(614)
 
 # Load riverine flux
@@ -31,12 +31,12 @@ riverine = pd.read_csv('riverine10.csv')
 mc_parameter = {
     "tmin"     :  480,
     "tmax"     :  450,
-    "nt"       :  1000,
+    "nt"       :  700,
 
-    "Jriv"     :  [1e6, 1e12],
-    "Rriv"     :  [0.7030, 0.7120],
+    "Jriv"     :  [10e9, 190e9],
+    "Rriv"     :  [0.7025, 0.7120],
 
-    "Jh"       :  [1e6, 1e12],
+    "Jh"       :  [4.5e9, 4e10],
     "Rh"       :  [0.7030, 0.7070],
 
     "sampling" : 80000

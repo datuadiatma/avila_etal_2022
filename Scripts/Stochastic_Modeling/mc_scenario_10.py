@@ -33,15 +33,15 @@ np.random.seed(614)
 mc_parameter = {
     "tmin"     :  480,
     "tmax"     :  450,
-    "nt"       :  1000,
+    "nt"       :  700,
 
-    "Jriv"     :  [1e6, 1e12],
-    "Rriv"     :  [0.7030, 0.7120],
+    "Jriv"     :  [10e9, 190e9],
+    "Rriv"     :  [0.7025, 0.7120],
 
-    "Jh"       :  [3.1e9, 1.6e10],
+    "Jh"       :  [4.5e9, 4e10],
     "Rh"       :  [0.7030, 0.7070],
 
-    "sampling" :  80000
+    "sampling" : 80000
 }
 # Start time
 starttime = time()

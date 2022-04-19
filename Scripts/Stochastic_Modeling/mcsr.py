@@ -69,7 +69,7 @@ def sim_stead_sr(jr, rr, jh, rh):
     return rsw
 
 # Function to run model
-def run_sim(nt, dt, age, jr, rr, rsw, jh, rh, n):
+def run_sim(nt, dt, age_, jr_, rr_, rsw, jh_, rh_, n):
     """  
     Solving diff. equations defined in simSr() using forward Euler method.
 
@@ -100,6 +100,20 @@ def run_sim(nt, dt, age, jr, rr, rsw, jh, rh, n):
         Strontium isotopic ratio of seawater.
      
     """
+    age = np.linspace(age_[0], age_[-1], nt)
+    
+    f = interp1d(age_, jr_)
+    jr = f(age)
+    
+    f = interp1d(age_, rr_)
+    rr = f(age)
+    
+    f = interp1d(age_, jh_)
+    jh = f(age)
+    
+    f = interp1d(age_, rh_)
+    rh = f(age)
+    
     rsw0 = (jr[0]*rr[0] + jh[0]*rh[0])/(jr[0]+jh[0])
     rsw[0] = rsw0
 
@@ -112,8 +126,9 @@ def run_sim(nt, dt, age, jr, rr, rsw, jh, rh, n):
         rsw[i+1] = rsw[i] + simSr(jr[i], rr[i], rsw[i], jh[i], rh[i], n[i])*dt
         jcarb = k * n[i]
 
-
-    return rsw
+    f = interp1d(age, rsw)
+    rsw_ = f(age_)
+    return rsw_
 
 def perturb(flux, age, age_min, age_max, factor):
     """

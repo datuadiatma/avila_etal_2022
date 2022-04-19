@@ -27,19 +27,19 @@ from mcsr_vec import run_sim_steady_state_vec as rss_vec
 np.random.seed(614)
 
 # Load riverine flux
-riverine = pd.read_csv('riverine.csv')
+riverine = pd.read_csv('riverine40.csv')
 mc_parameter = {
     "tmin"     :  480,
     "tmax"     :  450,
-    "nt"       :  1000,
+    "nt"       :  700,
 
-    "Jriv"     :  [1e6, 1e12],
-    "Rriv"     :  [0.7030, 0.7120],
+    "Jriv"     :  [10e9, 190e9],
+    "Rriv"     :  [0.7025, 0.7120],
 
-    "Jh"       :  [1e6, 1e12],
+    "Jh"       :  [4.5e9, 4e10],
     "Rh"       :  [0.7030, 0.7070],
 
-    "sampling" :  80000
+    "sampling" : 80000
 }
 # Start time
 starttime = time()
@@ -126,9 +126,9 @@ Rsw_hi = (Jriv_hi*Rriv_hi + Jh_hi*Rh_hi) / (Jriv_hi + Jh_hi)
 Rsw_lo = (Jriv_lo*Rriv_lo + Jh_lo*Rh_lo) / (Jriv_lo + Jh_lo)
 
 # Run transient model
-nt = len(age)
+nt = 1000000
 dt = (age.max() - age.min())*1e6/nt
-n = np.ones(nt)*1.9e17
+n = np.ones(nt)*0.1e17
 
 Rsw_transient = np.zeros(nt)
 Rsw_transient_hi = np.zeros(nt)
@@ -208,7 +208,7 @@ ax1.fill_between(age, Rsw_hi, Rsw_lo, fc='green', alpha=0.15)
 ax1.scatter(df['age'], df['sr'], fc='green', ec='black', label='Conodont Sr',
             alpha=0.3)
 ax1.set_xlim(480, 450)
-ax1.set_ylim(0.7075, 0.7095)
+#ax1.set_ylim(0.7075, 0.7095)
 ax1.set_yticks(np.linspace(0.7078, 0.7094, 5))
 ax1.set_ylabel(r'$^{87}Sr/^{86}Sr_{seawater}$', fontsize=14)
 ax1.legend(loc = 'lower left')
@@ -221,8 +221,8 @@ ax2.fill_between(age, Jh_hi/1e10, Jh_lo/1e10, fc='red', alpha=0.15)
 ax2.set_ylabel('Sr Flux\n($10^{10}$ mol/yr)', fontsize=14)
 ax2.legend(loc="upper left")
 ax2.set_xlim(480, 450)
-ax2.set_ylim(0, 9)
-ax2.set_yticks(np.linspace(2, 8, 4))
+#ax2.set_ylim(0, 9)
+#ax2.set_yticks(np.linspace(2, 8, 4))
 
 # ax3 = fig2.add_subplot(313, sharex=ax1)
 ax3.plot(age, Rriv_mean, 'b--', alpha=0.5, label='Riverine')
@@ -232,8 +232,8 @@ ax3.plot(age, Rh_mean, 'r--', alpha=0.5, label='Hydrothermal')
 ax3.fill_between(age, Rh_hi, Rh_lo, fc='red', alpha=0.15)
 ax3.legend()
 ax3.set_xlim(480, 450)
-ax3.set_ylim(0.7030, 0.7125)
-ax3.set_yticks(np.linspace(0.7035, 0.7115, 5))
+#ax3.set_ylim(0.7030, 0.7125)
+#ax3.set_yticks(np.linspace(0.7035, 0.7115, 5))
 ax3.set_xlabel('Age (Ma)')
 
 plt.savefig('../../Figures/MonteCarlo_Simulation/scenario5_riverine40_1col', dpi=300)
