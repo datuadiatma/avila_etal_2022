@@ -9,7 +9,7 @@ Calculating ridge production rates from Sea-level Curves, based on papers by:
       (simpliefied version of Gaffin's')
 
 Created on Thu Dec 17 11:08:41 2020
-@author: datua
+@author: @mas_datu / me@adtma.pw / adiatma.1@osu.edu
 
 """
 import numpy as np
