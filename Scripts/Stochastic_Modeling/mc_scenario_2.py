@@ -164,6 +164,13 @@ ag1.set_ylabel(r'$^{87}Sr/^{86}Sr_{seawater}$', fontsize=14)
 ag1.set_xlabel('Age (Ma)')
 ag1.legend(loc = 'lower left')
 
+# ag1s = fig2.add_subplot(gs[1,0:], sharex=ag1)
+ag1s = ag1.twinx()
+ag1s.plot(age, n, c='orange',label='Sr Reservoir')
+ag1s.set_ylabel('Sr Reservoir\n(mol)', fontsize=14)
+ag1s.legend(loc = 'lower right')
+ag1s.set_xlim(480, 450)
+ag1s.set_xlabel('Age (Ma)')
 
 ag2 = fig2.add_subplot(gs[1,0])
 ag2.plot(age, Jriv_mean, 'b--', alpha=0.5, label='Riverine')
